@@ -1,6 +1,7 @@
+using Unity.Mathematics;
 using UnityEngine;
 
-[RequireComponent(typeof(MeshFilter))]
+[RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 [ExecuteInEditMode]
 public class TerrainGenerator : MonoBehaviour {
     [Header("Mesh")]
@@ -12,16 +13,24 @@ public class TerrainGenerator : MonoBehaviour {
     public float sharpness;
     private Vector3[] vertices;
     private int[] triangles;
+    private Vector2[] uvs;
+
+    [Header("Color Map")]
+    public Gradient gradient;
+    public Material material;
 
     private float[,] noiseMap;
 
     private void Start() {
-        
+
     }
 
     private void Update() {
-        noiseMap = NoiseGenerator.GenerateNoise(dimensions.x + 1, dimensions.y + 1, frequency, amplitude, flatThreshold, sharpness);
+        noiseMap = NoiseGenerator.GenerateNoise(dimensions.x + 1, dimensions.y + 1, frequency, sharpness);
         GetComponent<MeshFilter>().mesh = MakeFlatShaded(GenerateMesh());
+
+        material.mainTexture = GenerateTexture();
+        GetComponent<MeshRenderer>().material = material;
     }
 
     private Mesh GenerateMesh() {
@@ -29,7 +38,7 @@ public class TerrainGenerator : MonoBehaviour {
         vertices = new Vector3[(dimensions.x + 1) * (dimensions.y + 1)];
         for (int z = 0, i = 0; z < dimensions.y + 1; z++) {
             for (int x = 0; x < dimensions.x + 1; x++, i++)
-                vertices[i] = new Vector3(x * scale, noiseMap[x, z], z * scale);
+                vertices[i] = new Vector3(x * scale, Mathf.Max(noiseMap[x, z] * amplitude, flatThreshold), z * scale);
         }
 
         // Create triangles
@@ -45,31 +54,57 @@ public class TerrainGenerator : MonoBehaviour {
             }
         }
 
+        // Create UVs
+        uvs = new Vector2[(dimensions.x + 1) * (dimensions.y + 1)];
+        for (int z = 0, i = 0; z < dimensions.y + 1; z++) {
+            for (int x = 0; x < dimensions.x + 1; x++, i++)
+                uvs[i] = new Vector2((float) x / (dimensions.x + 1), (float) z / (dimensions.y + 1));
+        }
+
         // Create mesh and return
         Mesh mesh = new Mesh();
         mesh.vertices = vertices;
         mesh.triangles = triangles;
+        mesh.uv = uvs;
         mesh.RecalculateNormals();
         return mesh;
     }
 
     private Mesh MakeFlatShaded(Mesh mesh) {
         Vector3[] oldVertices = mesh.vertices;
+        Vector2[] oldUVs = mesh.uv;
         int[] oldTriangles = mesh.triangles;
 
         Vector3[] newVertices = new Vector3[oldTriangles.Length];
+        Vector2[] newUVs = new Vector2[oldTriangles.Length];
         int[] newTriangles = new int[oldTriangles.Length];
 
         for (int i = 0; i < oldTriangles.Length; i++) {
             // Get positions of old vertices and assign to new
             newVertices[i] = oldVertices[oldTriangles[i]];
+            newUVs[i] = oldUVs[oldTriangles[i]];
             newTriangles[i] = i;
         }
 
         Mesh ret = new Mesh();
         ret.vertices = newVertices;
         ret.triangles = newTriangles;
+        ret.uv = newUVs;
         ret.RecalculateNormals();
+        return ret;
+    }
+
+    private Texture2D GenerateTexture() {
+        Texture2D ret = new Texture2D(dimensions.x + 1, dimensions.y + 1);
+        ret.filterMode = FilterMode.Point;
+
+        for (int i = 0; i < dimensions.x + 1; i++) {
+            for (int j = 0; j < dimensions.y + 1; j++) {
+                ret.SetPixel(i, j, gradient.Evaluate(noiseMap[i, j]));
+            }
+        }
+        ret.Apply();
+
         return ret;
     }
 }
