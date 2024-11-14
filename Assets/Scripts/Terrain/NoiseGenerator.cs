@@ -5,7 +5,7 @@ public static class NoiseGenerator {
         if (frequency <= 0f) frequency = 0.001f;
         if (sharpness <= 0f) sharpness = 0.001f;
 
-        float offset = 0f;
+        float offset = Random.Range(-100f, 100f);
         float[,] ret = new float[width, height];
         float[,] falloff = FalloffGenerator.Generate(width, height, falloffStrength);
 

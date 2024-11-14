@@ -23,10 +23,6 @@ public class TerrainGenerator : MonoBehaviour {
     private float[,] noiseMap;
 
     private void Start() {
-
-    }
-
-    private void Update() {
         noiseMap = NoiseGenerator.Generate(dimensions.x + 1, dimensions.y + 1, frequency, sharpness, falloffStrength);
         GetComponent<MeshFilter>().mesh = MakeFlatShaded(GenerateMesh());
 
