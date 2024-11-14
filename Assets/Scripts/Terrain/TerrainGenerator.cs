@@ -11,6 +11,7 @@ public class TerrainGenerator : MonoBehaviour {
     public float amplitude;
     public float flatThreshold;
     public float sharpness;
+    public float falloffStrength;
     private Vector3[] vertices;
     private int[] triangles;
     private Vector2[] uvs;
@@ -26,7 +27,7 @@ public class TerrainGenerator : MonoBehaviour {
     }
 
     private void Update() {
-        noiseMap = NoiseGenerator.GenerateNoise(dimensions.x + 1, dimensions.y + 1, frequency, sharpness);
+        noiseMap = NoiseGenerator.Generate(dimensions.x + 1, dimensions.y + 1, frequency, sharpness, falloffStrength);
         GetComponent<MeshFilter>().mesh = MakeFlatShaded(GenerateMesh());
 
         material.mainTexture = GenerateTexture();
