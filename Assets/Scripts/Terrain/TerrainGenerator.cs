@@ -1,4 +1,3 @@
-using Unity.Mathematics;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
@@ -22,7 +21,7 @@ public class TerrainGenerator : MonoBehaviour {
 
     private float[,] noiseMap;
 
-    private void Start() {
+    private void Awake() {
         noiseMap = NoiseGenerator.Generate(dimensions.x + 1, dimensions.y + 1, frequency, sharpness, falloffStrength);
         GetComponent<MeshFilter>().mesh = MakeFlatShaded(GenerateMesh());
 
@@ -104,4 +103,6 @@ public class TerrainGenerator : MonoBehaviour {
 
         return ret;
     }
+
+    public Vector3[] GetVertices() { return vertices; }
 }
