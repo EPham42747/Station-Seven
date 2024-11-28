@@ -27,7 +27,6 @@ public class BuildingGridManager : MonoBehaviour {
         flatHeight = terrainGenerator.flatThreshold;
 
         GenerateGrid();
-        RenderGrid();
 
         indicator = Instantiate(targetBuilding.prefab);
     }
@@ -41,7 +40,9 @@ public class BuildingGridManager : MonoBehaviour {
             if (!indicator) indicator = Instantiate(targetBuilding.prefab);
             indicator.transform.position = new Vector3(gridPos.x, terrainGenerator.flatThreshold + offsetHeight, gridPos.y);
 
-            if (Input.GetMouseButtonDown(0) && Placeable(gridPos, targetBuilding.size)) Place(targetBuilding, gridPos);
+            if (Input.GetMouseButtonDown(0) && Placeable(targetBuilding, gridPos)) Place(targetBuilding, gridPos);
+
+            RenderGrid(targetBuilding, gridPos);
         }
         else Destroy(indicator);
     }
@@ -69,29 +70,35 @@ public class BuildingGridManager : MonoBehaviour {
         }
     }
 
-    private void RenderGrid() {
+    private void RenderGrid(PlaceableObject placeable, Vector2Int position) {
         for (int i = 0; i < gridParent.childCount - 1; i++) Destroy(gridParent.GetChild(i).gameObject);
 
         for (int r = 0; r < dimensions.x; r++) {
             for (int c = 0; c < dimensions.y; c++) {
-                GameObject tile = Instantiate(buildableTiles[r, c] ? activeTile : inactiveTile, gridParent);
-                tile.transform.position = new Vector3(r + 0.5f, flatHeight + offsetHeight, c + 0.5f);
+                if (r >= position.x && r < position.x + placeable.size.x && c >= position.y && c < position.y + placeable.size.y) {
+                    GameObject tile = Instantiate(Placeable(placeable, position) ? activeTile : inactiveTile , gridParent);
+                    tile.transform.position = new Vector3(r + 0.5f, flatHeight + offsetHeight, c + 0.5f);
+                }
+                else if (!buildableTiles[r, c]) {
+                    GameObject tile = Instantiate(inactiveTile, gridParent);
+                    tile.transform.position = new Vector3(r + 0.5f, flatHeight + offsetHeight, c + 0.5f);
+                }
             }
         }
     }
 
-    public bool Placeable(Vector2Int position, Vector2Int size) {
-        if (position.x < 0 || position.y < 0 || position.x + size.x > dimensions.x || position.y + size.y > dimensions.y) return false;
+    private bool Placeable(PlaceableObject placeable, Vector2Int position) {
+        if (position.x < 0 || position.y < 0 || position.x + placeable.size.x > dimensions.x || position.y + placeable.size.y > dimensions.y) return false;
 
-        for (int r = position.x; r < position.x + size.x; r++) {
-            for (int c = position.y; c < position.y + size.y; c++) {
+        for (int r = position.x; r < position.x + placeable.size.x; r++) {
+            for (int c = position.y; c < position.y + placeable.size.y; c++) {
                 if (!buildableTiles[r, c]) return false;
             }
         }
         return true;
     }
 
-    public void Place(PlaceableObject placeable, Vector2Int position) {
+    private void Place(PlaceableObject placeable, Vector2Int position) {
         for (int r = position.x; r < position.x + placeable.size.x; r++) {
             for (int c = position.y; c < position.y + placeable.size.y; c++) {
                 if (!buildableTiles[r, c]) {
@@ -105,7 +112,6 @@ public class BuildingGridManager : MonoBehaviour {
 
         GameObject o = Instantiate(placeable.prefab, buildingsParent);
         o.transform.position = new Vector3(position.x, flatHeight + offsetHeight, position.y);
-        RenderGrid();
     }
 
     public void SetTargetBuilding(PlaceableObject placeable) { targetBuilding = placeable; }
