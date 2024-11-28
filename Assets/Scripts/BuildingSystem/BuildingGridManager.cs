@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BuildingGridManager : MonoBehaviour {
-    public Camera mainCamera;
     public TerrainGenerator terrainGenerator;
     public float offsetHeight;
 
@@ -12,7 +11,7 @@ public class BuildingGridManager : MonoBehaviour {
 
     [Header("Buildings")]
     public Transform buildingsParent;
-    public PlaceableObject testBuilding;
+    public PlaceableObject targetBuilding;
 
     private List<(PlaceableObject, Vector2Int)> buildings = new List<(PlaceableObject, Vector2Int)>();
 
@@ -20,7 +19,8 @@ public class BuildingGridManager : MonoBehaviour {
     public Transform gridParent;
     public GameObject activeTile;
     public GameObject inactiveTile;
-    public GameObject indicator;
+
+    private GameObject indicator;
 
     private void Start() {
         dimensions = terrainGenerator.dimensions;
@@ -28,6 +28,8 @@ public class BuildingGridManager : MonoBehaviour {
 
         GenerateGrid();
         RenderGrid();
+
+        indicator = Instantiate(targetBuilding.prefab);
     }
 
     private void Update() {
@@ -35,10 +37,13 @@ public class BuildingGridManager : MonoBehaviour {
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit)) {
             Vector2Int gridPos = new Vector2Int((int) Mathf.Floor(hit.point.x), (int) Mathf.Floor(hit.point.z));
-
-            if (Input.GetMouseButtonDown(0) && Placeable(gridPos, testBuilding.size)) Place(testBuilding, gridPos);
+            
+            if (!indicator) indicator = Instantiate(targetBuilding.prefab);
             indicator.transform.position = new Vector3(gridPos.x, terrainGenerator.flatThreshold + offsetHeight, gridPos.y);
+
+            if (Input.GetMouseButtonDown(0) && Placeable(gridPos, targetBuilding.size)) Place(targetBuilding, gridPos);
         }
+        else Destroy(indicator);
     }
 
     private void GenerateGrid() {
@@ -80,7 +85,6 @@ public class BuildingGridManager : MonoBehaviour {
 
         for (int r = position.x; r < position.x + size.x; r++) {
             for (int c = position.y; c < position.y + size.y; c++) {
-                Debug.Log($"{r}, {c}");
                 if (!buildableTiles[r, c]) return false;
             }
         }
@@ -103,4 +107,6 @@ public class BuildingGridManager : MonoBehaviour {
         o.transform.position = new Vector3(position.x, flatHeight + offsetHeight, position.y);
         RenderGrid();
     }
+
+    public void SetTargetBuilding(PlaceableObject placeable) { targetBuilding = placeable; }
 }
