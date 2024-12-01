@@ -36,9 +36,10 @@ public class BuildingGridManager : MonoBehaviour {
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit)) {
             Vector2Int gridPos = new Vector2Int((int) Mathf.Floor(hit.point.x), (int) Mathf.Floor(hit.point.z));
+            Vector2 center = new Vector2(gridPos.x + targetBuilding.size.x / 2f, gridPos.y + targetBuilding.size.y / 2f);
             
             if (!indicator) indicator = Instantiate(targetBuilding.prefab);
-            indicator.transform.position = new Vector3(gridPos.x, terrainGenerator.flatThreshold + offsetHeight, gridPos.y);
+            indicator.transform.position = new Vector3(center.x, terrainGenerator.flatThreshold + offsetHeight, center.y);
 
             if (Input.GetMouseButtonDown(0) && Placeable(targetBuilding, gridPos)) Place(targetBuilding, gridPos);
 
@@ -110,8 +111,9 @@ public class BuildingGridManager : MonoBehaviour {
         }
         buildings.Add((placeable, position));
 
+        Vector2 center = new Vector2(position.x + targetBuilding.size.x / 2f, position.y + targetBuilding.size.y / 2f);
         GameObject o = Instantiate(placeable.prefab, buildingsParent);
-        o.transform.position = new Vector3(position.x, flatHeight + offsetHeight, position.y);
+        o.transform.position = new Vector3(center.x, flatHeight + offsetHeight, center.y);
     }
 
     public void SetTargetBuilding(PlaceableObject placeable) { targetBuilding = placeable; }
