@@ -4,20 +4,24 @@ public class PlayerController : MonoBehaviour {
     public Transform cameraParent;
     private Transform mainCamera;
 
+    [Header("Rotate")]
     public float rotationSpeed;
 
-    public Vector3 moveBounds;
+    [Header("Pan")]
+    public Vector2 moveBounds;
     public float minMoveSpeed;
     public float maxMoveSpeed;
-    private Vector3 startPosition;
+    private Vector3 startPos;
+    private Vector3 offset = Vector3.zero;
 
+    [Header("Zoom")]
     public float minZoom;
     public float maxZoom;
     public float zoomSpeed;
 
     private void Start() {
-        mainCamera = cameraParent.GetChild(0).GetComponent<Transform>();
-        startPosition = mainCamera.localPosition;
+        mainCamera = cameraParent.GetChild(0).GetChild(0).GetComponent<Transform>();
+        startPos = mainCamera.localPosition;
     }
 
     private void Update() {
@@ -41,16 +45,18 @@ public class PlayerController : MonoBehaviour {
     private void Pan() {
         float zoomRatio = (Camera.main.orthographicSize - minZoom) / (maxZoom - minZoom);
         float _speed = (maxMoveSpeed - minMoveSpeed) * zoomRatio + minMoveSpeed;
-        Vector3 minMoveBounds = startPosition - moveBounds * (1 - zoomRatio);
-        Vector3 maxMoveBounds = startPosition + moveBounds * (1 - zoomRatio);
 
-        mainCamera.position += (mainCamera.right * Input.GetAxis("Mouse X") + mainCamera.up * Input.GetAxis("Mouse Y")) * _speed * Time.deltaTime;
-        mainCamera.localPosition = new Vector3(
-            Mathf.Clamp(mainCamera.localPosition.x, minMoveBounds.x, maxMoveBounds.x),
-            Mathf.Clamp(mainCamera.localPosition.y, minMoveBounds.y, maxMoveBounds.y),
-            Mathf.Clamp(mainCamera.localPosition.z, minMoveBounds.z, maxMoveBounds.z)
+        Vector2 lowBounds = -moveBounds * (1 - zoomRatio);
+        Vector2 highBounds = moveBounds * (1 - zoomRatio);
+
+        offset -= (Vector3.right * Input.GetAxis("Mouse X") + Vector3.up * Input.GetAxis("Mouse Y")) * _speed * Time.deltaTime;
+        offset = new Vector3(
+            Mathf.Clamp(offset.x, lowBounds.x, highBounds.x),
+            Mathf.Clamp(offset.y, lowBounds.y, highBounds.y),
+            offset.z
         );
 
+        mainCamera.localPosition = startPos + offset;
         Cursor.visible = false;
     }
 }
