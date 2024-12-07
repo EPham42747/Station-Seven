@@ -35,17 +35,21 @@ public class BuildingGridManager : MonoBehaviour {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit)) {
+            Cursor.visible = false;
+            
             Vector2Int gridPos = new Vector2Int((int) Mathf.Floor(hit.point.x), (int) Mathf.Floor(hit.point.z));
             Vector2 center = new Vector2(gridPos.x + targetBuilding.size.x / 2f, gridPos.y + targetBuilding.size.y / 2f);
             
-            if (!indicator) indicator = Instantiate(targetBuilding.prefab);
-            indicator.transform.position = new Vector3(center.x, terrainGenerator.flatThreshold + offsetHeight, center.y);
+            RenderIndicator(center);
 
             if (Input.GetMouseButtonDown(0) && Placeable(targetBuilding, gridPos)) Place(targetBuilding, gridPos);
 
             RenderGrid(targetBuilding, gridPos);
         }
-        else Destroy(indicator);
+        else {
+            Destroy(indicator);
+            Cursor.visible = true;
+        }
     }
 
     private void GenerateGrid() {
@@ -88,6 +92,11 @@ public class BuildingGridManager : MonoBehaviour {
         }
     }
 
+    private void RenderIndicator(Vector2 position) {
+        if (!indicator) indicator = Instantiate(targetBuilding.prefab);
+        indicator.transform.position = new Vector3(position.x, terrainGenerator.flatThreshold + offsetHeight, position.y);
+    }
+
     private bool Placeable(PlaceableObject placeable, Vector2Int position) {
         if (position.x < 0 || position.y < 0 || position.x + placeable.size.x > dimensions.x || position.y + placeable.size.y > dimensions.y) return false;
 
@@ -117,4 +126,11 @@ public class BuildingGridManager : MonoBehaviour {
     }
 
     public void SetTargetBuilding(PlaceableObject placeable) { targetBuilding = placeable; }
+
+    public void Disable() {
+        Destroy(indicator);
+        for (int i = 0; i < gridParent.childCount - 1; i++) Destroy(gridParent.GetChild(i).gameObject);
+
+        this.enabled = false;
+    }
 }
