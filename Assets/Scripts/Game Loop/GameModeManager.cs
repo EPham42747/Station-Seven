@@ -36,4 +36,9 @@ public class GameModeManager : MonoBehaviour {
         if (buildingGridManager.enabled) buildingGridManager.Disable();
         buildMenu.SetActive(false);
     }
+
+    public void Disable() {
+        SetPlayMode();
+        this.enabled = false;
+    }
 }
