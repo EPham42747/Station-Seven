@@ -3,8 +3,6 @@ using UnityEngine;
 public class ResourceBuilding : MonoBehaviour {
     [Header("Placement")]
     public int energyPlaceCost;
-    public int oxygenPlaceCost;
-    public int foodPlaceCost;
 
     [Header("Production")]
     public int energyProduction;

@@ -62,9 +62,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f20963161113a4f75b315eca72946c10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyPlaceCost: 15
-  oxygenPlaceCost: 0
-  foodPlaceCost: 0
+  energyPlaceCost: 10
   energyProduction: 5
   oxygenProduction: 0
   foodProduction: 0

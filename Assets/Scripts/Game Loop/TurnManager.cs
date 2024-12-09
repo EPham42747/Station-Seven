@@ -24,10 +24,6 @@ public class TurnManager : MonoBehaviour {
     public TMP_Text timeText;
     private float time = 0f;
 
-    private void Start() {
-        resourceManager.UpdateText();
-    }
-
     private void Update() {
         time += Time.deltaTime;
         if (time >= maxTime) {
