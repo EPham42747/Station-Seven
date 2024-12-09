@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3088612180911069875}
   - component: {fileID: 7081114863021982623}
+  - component: {fileID: -8275481960735952659}
   m_Layer: 0
   m_Name: MOXIE
   m_TagString: Untagged
@@ -48,6 +49,27 @@ MonoBehaviour:
   objectName: MOXIE
   size: {x: 3, y: 3}
   prefab: {fileID: 7795019612477676098}
+--- !u!114 &-8275481960735952659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7795019612477676098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f20963161113a4f75b315eca72946c10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energyPlaceCost: 50
+  oxygenPlaceCost: 0
+  foodPlaceCost: 0
+  energyProduction: 0
+  oxygenProduction: 25
+  foodProduction: 0
+  energyConsumption: 10
+  oxygenConsumption: 0
+  foodConsumption: 0
 --- !u!1001 &7525494488957509920
 PrefabInstance:
   m_ObjectHideFlags: 0

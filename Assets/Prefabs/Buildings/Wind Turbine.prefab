@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9149310571028152235}
   - component: {fileID: 6814740696328872302}
+  - component: {fileID: 6597684995969089919}
   m_Layer: 0
   m_Name: Wind Turbine
   m_TagString: Untagged
@@ -48,6 +49,27 @@ MonoBehaviour:
   objectName: Wind Turbine
   size: {x: 4, y: 3}
   prefab: {fileID: 2050309892086462634}
+--- !u!114 &6597684995969089919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050309892086462634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f20963161113a4f75b315eca72946c10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energyPlaceCost: 50
+  oxygenPlaceCost: 0
+  foodPlaceCost: 0
+  energyProduction: 20
+  oxygenProduction: 0
+  foodProduction: 0
+  energyConsumption: 0
+  oxygenConsumption: 0
+  foodConsumption: 0
 --- !u!1001 &8801562414493633604
 PrefabInstance:
   m_ObjectHideFlags: 0
