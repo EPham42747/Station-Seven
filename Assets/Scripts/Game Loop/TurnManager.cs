@@ -1,10 +1,13 @@
 using TMPro;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TurnManager : MonoBehaviour {
     [Header("Components")]
     public PlayerController playerController;
     public GameModeManager gameModeManager;
+    public ResourceManager resourceManager;
 
     [Header("Turn UI")]
     public GameObject loseMenu;
@@ -21,6 +24,10 @@ public class TurnManager : MonoBehaviour {
     public TMP_Text timeText;
     private float time = 0f;
 
+    private void Start() {
+        resourceManager.UpdateText();
+    }
+
     private void Update() {
         time += Time.deltaTime;
         if (time >= maxTime) {
@@ -33,7 +40,7 @@ public class TurnManager : MonoBehaviour {
 
     public void AdvanceTurn() {
         if (!ended) {
-            if (++turn > maxTurns) {
+            if (++turn > maxTurns || resourceManager.TooLongAtDeficit()) {
                 loseMenu.SetActive(true);
                 playerController.enabled = false;
                 gameModeManager.Disable();
@@ -43,6 +50,10 @@ public class TurnManager : MonoBehaviour {
 
             turnText.text = turnTextPrefix + turn;
             time = 0f;
+            resourceManager.UpdateResources();
         }
     }
+
+    public void Quit() { SceneManager.LoadScene(0); }
+    public void Restart() { SceneManager.LoadScene(1); }
 }

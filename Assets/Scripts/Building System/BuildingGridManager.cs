@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BuildingGridManager : MonoBehaviour {
+    [Header("Terrain")]
     public TerrainGenerator terrainGenerator;
     public float offsetHeight;
 
@@ -14,6 +15,9 @@ public class BuildingGridManager : MonoBehaviour {
     public PlaceableObject targetBuilding;
 
     private List<(PlaceableObject, Vector2Int)> buildings = new List<(PlaceableObject, Vector2Int)>();
+
+    [Header("Resource Management")]
+    public ResourceManager resourceManager;
 
     [Header("Rendering")]
     public Transform gridParent;
@@ -119,6 +123,7 @@ public class BuildingGridManager : MonoBehaviour {
             }
         }
         buildings.Add((placeable, position));
+        resourceManager.AddBuilding(placeable.prefab.GetComponent<ResourceBuilding>());
 
         Vector2 center = new Vector2(position.x + targetBuilding.size.x / 2f, position.y + targetBuilding.size.y / 2f);
         GameObject o = Instantiate(placeable.prefab, buildingsParent);

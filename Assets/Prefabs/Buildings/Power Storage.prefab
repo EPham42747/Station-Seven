@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7940239413040279272}
   - component: {fileID: 891605468386455363}
+  - component: {fileID: 7805207319810054077}
   m_Layer: 0
   m_Name: Power Storage
   m_TagString: Untagged
@@ -48,6 +49,27 @@ MonoBehaviour:
   objectName: Power Storage
   size: {x: 2, y: 2}
   prefab: {fileID: 3881816904975624264}
+--- !u!114 &7805207319810054077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3881816904975624264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f20963161113a4f75b315eca72946c10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energyPlaceCost: 20
+  oxygenPlaceCost: 0
+  foodPlaceCost: 0
+  energyProduction: 0
+  oxygenProduction: 0
+  foodProduction: 0
+  energyConsumption: 0
+  oxygenConsumption: 0
+  foodConsumption: 0
 --- !u!1001 &7447418824802683209
 PrefabInstance:
   m_ObjectHideFlags: 0

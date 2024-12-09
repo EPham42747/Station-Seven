@@ -93,6 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 482142042930963692}
   - component: {fileID: 1252324794116302833}
+  - component: {fileID: -6227899015763720498}
   m_Layer: 0
   m_Name: Base Module B
   m_TagString: Untagged
@@ -131,3 +132,24 @@ MonoBehaviour:
   objectName: Base Module B
   size: {x: 5, y: 5}
   prefab: {fileID: 9059197191674213129}
+--- !u!114 &-6227899015763720498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9059197191674213129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f20963161113a4f75b315eca72946c10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energyPlaceCost: 100
+  oxygenPlaceCost: 0
+  foodPlaceCost: 0
+  energyProduction: 0
+  oxygenProduction: 0
+  foodProduction: 0
+  energyConsumption: 15
+  oxygenConsumption: 0
+  foodConsumption: 0
