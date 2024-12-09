@@ -24,8 +24,16 @@ public class ResourceManager : MonoBehaviour {
 
     [Header("UI")]
     public TMP_Text energyText;
+    public TMP_Text energyGainText;
+    public TMP_Text energyLossText;
+
     public TMP_Text oxygenText;
+    public TMP_Text oxygenGainText;
+    public TMP_Text oxygenLossText;
+
     public TMP_Text foodText;
+    public TMP_Text foodGainText;
+    public TMP_Text foodLossText;
 
     [Header("Deficit")]
     public int maxDeficitTurns;
@@ -70,6 +78,14 @@ public class ResourceManager : MonoBehaviour {
         energyText.color = curEnergy < 0 ? Color.red : Color.white;
         oxygenText.color = curOxygen < 0 ? Color.red : Color.white;
         foodText.color = curFood < 0 ? Color.red : Color.white;
+
+        energyGainText.text = $"+{energyGain}";
+        oxygenGainText.text = $"+{oxygenGain}";
+        foodGainText.text = $"+{foodGain}";
+
+        energyLossText.text = $"-{energyLoss}";
+        oxygenLossText.text = $"-{oxygenLoss}";
+        foodLossText.text = $"-{foodLoss}";
     }
 
     public bool TooLongAtDeficit() { return deficit > maxDeficitTurns; }
