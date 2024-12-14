@@ -32,7 +32,7 @@ public class TerrainGenerator : MonoBehaviour {
         material.mainTexture = GenerateTexture();
         GetComponent<MeshRenderer>().material = material;
 
-        surface.BuildNavMesh();
+        UpdateNavMesh();
     }
 
     private Mesh GenerateMesh() {
@@ -111,4 +111,5 @@ public class TerrainGenerator : MonoBehaviour {
     }
 
     public Vector3[] GetVertices() { return vertices; }
+    public void UpdateNavMesh() { surface.BuildNavMesh(); }
 }

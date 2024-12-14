@@ -124,6 +124,7 @@ public class BuildingGridManager : MonoBehaviour {
         }
         buildings.Add((placeable, position));
         resourceManager.AddBuilding(placeable.prefab.GetComponent<ResourceBuilding>());
+        terrainGenerator.UpdateNavMesh();
 
         Vector2 center = new Vector2(position.x + targetBuilding.size.x / 2f, position.y + targetBuilding.size.y / 2f);
         GameObject o = Instantiate(placeable.prefab, buildingsParent);

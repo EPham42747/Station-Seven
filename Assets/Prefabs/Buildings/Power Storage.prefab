@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7940239413040279272}
   - component: {fileID: 891605468386455363}
   - component: {fileID: 7805207319810054077}
+  - component: {fileID: 497788735054497334}
   m_Layer: 0
   m_Name: Power Storage
   m_TagString: Untagged
@@ -62,14 +63,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   energyPlaceCost: 20
-  oxygenPlaceCost: 0
-  foodPlaceCost: 0
   energyProduction: 0
   oxygenProduction: 0
   foodProduction: 0
   energyConsumption: 0
   oxygenConsumption: 0
   foodConsumption: 0
+--- !u!208 &497788735054497334
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3881816904975624264}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.775, y: 0.35, z: 0.775}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.3, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &7447418824802683209
 PrefabInstance:
   m_ObjectHideFlags: 0
