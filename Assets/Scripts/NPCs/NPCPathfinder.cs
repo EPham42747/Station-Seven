@@ -4,7 +4,6 @@ using UnityEngine.AI;
 
 public class NPCPathfinder : MonoBehaviour {
     private BuildingGridManager buildingGridManager;
-    public Animator animator;
     private NavMeshAgent agent;
 
     public float stopThreshold;
@@ -37,11 +36,7 @@ public class NPCPathfinder : MonoBehaviour {
             lastIndex = index;
         }
 
-        if (agent.velocity.magnitude <= stopThreshold) {
-            time += Time.deltaTime;
-            animator.SetBool("Walking", false);
-        }
-        else animator.SetBool("Walking", true);
+        if (agent.velocity.magnitude <= stopThreshold) time += Time.deltaTime;
     }
 
     private Vector3 GetDestination(int index) {
