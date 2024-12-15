@@ -1,4 +1,5 @@
 using UnityEngine;
+using Unity.AI.Navigation;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 [ExecuteInEditMode]
@@ -19,6 +20,9 @@ public class TerrainGenerator : MonoBehaviour {
     public Gradient gradient;
     public Material material;
 
+    [Header("NavMesh")]
+    public NavMeshSurface surface;
+
     private float[,] noiseMap;
 
     private void Awake() {
@@ -27,6 +31,12 @@ public class TerrainGenerator : MonoBehaviour {
 
         material.mainTexture = GenerateTexture();
         GetComponent<MeshRenderer>().material = material;
+
+        UpdateNavMesh();
+    }
+
+    private void Start() {
+        
     }
 
     private Mesh GenerateMesh() {
@@ -105,4 +115,5 @@ public class TerrainGenerator : MonoBehaviour {
     }
 
     public Vector3[] GetVertices() { return vertices; }
+    public void UpdateNavMesh() { surface.BuildNavMesh(); }
 }

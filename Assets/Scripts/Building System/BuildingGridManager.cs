@@ -11,13 +11,11 @@ public class BuildingGridManager : MonoBehaviour {
     private float flatHeight;
 
     [Header("Buildings")]
+    public BuildModeManager buildModeManager;
     public Transform buildingsParent;
     public PlaceableObject targetBuilding;
 
     private List<(PlaceableObject, Vector2Int)> buildings = new List<(PlaceableObject, Vector2Int)>();
-
-    [Header("Resource Management")]
-    public ResourceManager resourceManager;
 
     [Header("Rendering")]
     public Transform gridParent;
@@ -123,7 +121,7 @@ public class BuildingGridManager : MonoBehaviour {
             }
         }
         buildings.Add((placeable, position));
-        resourceManager.AddBuilding(placeable.prefab.GetComponent<ResourceBuilding>());
+        buildModeManager.UpdateBuildings(placeable.prefab.GetComponent<ResourceBuilding>(), new Vector3(position.x, 8f, position.y));
 
         Vector2 center = new Vector2(position.x + targetBuilding.size.x / 2f, position.y + targetBuilding.size.y / 2f);
         GameObject o = Instantiate(placeable.prefab, buildingsParent);
@@ -138,4 +136,6 @@ public class BuildingGridManager : MonoBehaviour {
 
         this.enabled = false;
     }
+
+    public List<(PlaceableObject, Vector2Int)> GetBuildingList() { return buildings; }
 }

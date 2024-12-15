@@ -62,8 +62,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   energyPlaceCost: 50
-  oxygenPlaceCost: 0
-  foodPlaceCost: 0
   energyProduction: 0
   oxygenProduction: 25
   foodProduction: 0
