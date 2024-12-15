@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class NPCPathfinder : MonoBehaviour {
-    public BuildingGridManager buildingGridManager;
+    private BuildingGridManager buildingGridManager;
     public Animator animator;
     private NavMeshAgent agent;
 
@@ -18,6 +18,7 @@ public class NPCPathfinder : MonoBehaviour {
     private int lastIndex;
 
     private void Start() {
+        buildingGridManager = FindObjectOfType<BuildingGridManager>();
         agent = GetComponent<NavMeshAgent>();
     }
 

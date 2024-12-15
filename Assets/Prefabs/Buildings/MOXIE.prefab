@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3088612180911069875}
   - component: {fileID: 7081114863021982623}
   - component: {fileID: -8275481960735952659}
-  - component: {fileID: 4399167826671859522}
   m_Layer: 0
   m_Name: MOXIE
   m_TagString: Untagged
@@ -69,22 +68,6 @@ MonoBehaviour:
   energyConsumption: 10
   oxygenConsumption: 0
   foodConsumption: 0
---- !u!208 &4399167826671859522
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7795019612477676098}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 1.245, y: 1.09, z: 1.25}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 1.05, z: 0.08}
-  m_TimeToStationary: 0.5
 --- !u!1001 &7525494488957509920
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 759487809982971992}
   - component: {fileID: 1236765427718424104}
   - component: {fileID: 2019113285630590639}
-  - component: {fileID: 2228416192622359197}
   m_Layer: 0
   m_Name: Farming Dome
   m_TagString: Untagged
@@ -69,22 +68,6 @@ MonoBehaviour:
   energyConsumption: 10
   oxygenConsumption: 20
   foodConsumption: 0
---- !u!208 &2228416192622359197
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7108670810297580663}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 2.25, y: 1.72, z: 2.3}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 1.65, z: 0.12}
-  m_TimeToStationary: 0.5
 --- !u!1001 &6658095495709790738
 PrefabInstance:
   m_ObjectHideFlags: 0
