@@ -31,7 +31,9 @@ public class TerrainGenerator : MonoBehaviour {
 
         material.mainTexture = GenerateTexture();
         GetComponent<MeshRenderer>().material = material;
+    }
 
+    private void Start() {
         UpdateNavMesh();
     }
 

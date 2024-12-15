@@ -139,4 +139,6 @@ public class BuildingGridManager : MonoBehaviour {
 
         this.enabled = false;
     }
+
+    public List<(PlaceableObject, Vector2Int)> GetBuildingList() { return buildings; }
 }
