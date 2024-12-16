@@ -27,7 +27,8 @@ public class ResourceManager : MonoBehaviour {
 
     public int goalPopulation;
     public float resourcesPerPerson;
-    private int curPopulation;
+
+    public bool devMode;
 
     [Header("Special Buildings")]
     public int energyStorageCapacity;
@@ -65,26 +66,36 @@ public class ResourceManager : MonoBehaviour {
         curOxygen += oxygenGain - oxygenLoss;
         curFood += foodGain - foodLoss;
 
-        curEnergy = Math.Min(curEnergy, maxEnergy);
-        curOxygen = Math.Min(curOxygen, maxOxygen);
-        curFood = Math.Min(curFood, maxFood);
-
-        energyGain = 0;
-        energyLoss = 0;
-        oxygenGain = 0;
-        oxygenLoss = 0;
-        foodGain = 0;
-        foodLoss = 0;
-
-        foreach (ResourceBuilding building in buildings) {
-            energyGain += building.energyProduction;
-            energyLoss += building.energyConsumption;
-            oxygenGain += building.oxygenProduction;
-            oxygenLoss += building.oxygenConsumption;
-            foodGain += building.foodProduction;
-            foodLoss += building.foodConsumption;
+        if (devMode) {
+            energyGain = 9999;
+            energyLoss = 0;
+            oxygenGain = 9999;
+            oxygenLoss = 0;
+            foodGain = 9999;
+            foodLoss = 0;
         }
-        
+        else {
+            curEnergy = Math.Min(curEnergy, maxEnergy);
+            curOxygen = Math.Min(curOxygen, maxOxygen);
+            curFood = Math.Min(curFood, maxFood);
+
+            energyGain = 0;
+            energyLoss = 0;
+            oxygenGain = 0;
+            oxygenLoss = 0;
+            foodGain = 0;
+            foodLoss = 0;
+
+            foreach (ResourceBuilding building in buildings) {
+                energyGain += building.energyProduction;
+                energyLoss += building.energyConsumption;
+                oxygenGain += building.oxygenProduction;
+                oxygenLoss += building.oxygenConsumption;
+                foodGain += building.foodProduction;
+                foodLoss += building.foodConsumption;
+            }
+        }
+            
         deficit = curEnergy < 0f || curOxygen < 0f || curFood < 0f ? deficit + 1 : 0;
         
         UpdateText();
@@ -107,7 +118,8 @@ public class ResourceManager : MonoBehaviour {
         oxygenLossText.text = $"-{oxygenLoss}";
         foodLossText.text = $"-{foodLoss}";
 
-        populationText.text = $"Maximum capacity: {(int) (Mathf.Min(energyGain - energyLoss, oxygenGain - oxygenLoss, foodGain - foodLoss) / resourcesPerPerson)}/{goalPopulation}";
+        int pop = (int) (Mathf.Min(energyGain - energyLoss, oxygenGain - oxygenLoss, foodGain - foodLoss) / resourcesPerPerson);
+        populationText.text = $"Maximum capacity: {(int) Mathf.Max(pop, 0f)}/{goalPopulation}";
     }
 
     public bool TooLongAtDeficit() { return deficit > maxDeficitTurns; }
