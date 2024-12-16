@@ -10,6 +10,7 @@ public class TurnManager : MonoBehaviour {
     public ResourceManager resourceManager;
 
     [Header("Turn UI")]
+    public GameObject winMenu;
     public GameObject loseMenu;
     public TMP_Text turnText;
     public string turnTextPrefix;
@@ -36,6 +37,13 @@ public class TurnManager : MonoBehaviour {
 
     public void AdvanceTurn() {
         if (!ended) {
+            if (resourceManager.HasWon()) {
+                winMenu.SetActive(true);
+                playerController.enabled = false;
+                gameModeManager.Disable();
+
+                ended = true;
+            }
             if (++turn > maxTurns || resourceManager.TooLongAtDeficit()) {
                 loseMenu.SetActive(true);
                 playerController.enabled = false;
