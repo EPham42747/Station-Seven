@@ -12,6 +12,7 @@ public class BuildingGridManager : MonoBehaviour {
 
     [Header("Buildings")]
     public BuildModeManager buildModeManager;
+    public PlaySound playSound;
     public Transform buildingsParent;
     public PlaceableObject targetBuilding;
 
@@ -122,6 +123,7 @@ public class BuildingGridManager : MonoBehaviour {
         }
         buildings.Add((placeable, position));
         buildModeManager.UpdateBuildings(placeable.prefab.GetComponent<ResourceBuilding>(), new Vector3(position.x, 8f, position.y));
+        playSound.PlayBuild();
 
         Vector2 center = new Vector2(position.x + targetBuilding.size.x / 2f, position.y + targetBuilding.size.y / 2f);
         GameObject o = Instantiate(placeable.prefab, buildingsParent);

@@ -25,6 +25,10 @@ public class ResourceManager : MonoBehaviour {
     private int foodGain = 0;
     private int foodLoss = 0;
 
+    public int goalPopulation;
+    public float resourcesPerPerson;
+    private int curPopulation;
+
     [Header("Special Buildings")]
     public int energyStorageCapacity;
     public int oxygenStorageCapacity;
@@ -42,6 +46,8 @@ public class ResourceManager : MonoBehaviour {
     public TMP_Text foodText;
     public TMP_Text foodGainText;
     public TMP_Text foodLossText;
+
+    public TMP_Text populationText;
 
     [Header("Deficit")]
     public int maxDeficitTurns;
@@ -100,6 +106,8 @@ public class ResourceManager : MonoBehaviour {
         energyLossText.text = $"-{energyLoss}";
         oxygenLossText.text = $"-{oxygenLoss}";
         foodLossText.text = $"-{foodLoss}";
+
+        populationText.text = $"Maximum capacity: {(int) (Mathf.Min(energyGain - energyLoss, oxygenGain - oxygenLoss, foodGain - foodLoss) / resourcesPerPerson)}/{goalPopulation}";
     }
 
     public bool TooLongAtDeficit() { return deficit > maxDeficitTurns; }
@@ -114,4 +122,6 @@ public class ResourceManager : MonoBehaviour {
 
         UpdateText();
     }
+
+    public bool HasWon() { return Mathf.Min(energyGain - energyLoss, oxygenGain - oxygenLoss, foodGain - foodLoss) / resourcesPerPerson > goalPopulation; }
 }
